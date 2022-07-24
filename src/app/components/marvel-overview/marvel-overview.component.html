@@ -1,0 +1,102 @@
+<div class="main__container px-2">
+    <button class="back__btn" mat-button (click)="goBack()"> <span class="material-icons">
+            arrow_back
+        </span> Back</button>
+    <div class="container">
+        <div class=" overview__wrapper">
+            <div class="row" *ngFor="let marvelData of marvelDataById">
+                <div class="overview__img  col-sm-6 col-xs-12 col-md-6" *ngIf="marvelData.thumbnail !== null">
+                    <img class="rounded" src="{{marvelData.thumbnail.path}}.{{marvelData.thumbnail.extension}}"
+                        alt="image not found">
+                </div>
+                <div class="overview__img  col-sm-6 col-xs-12 col-md-6" *ngIf="marvelData.thumbnail === null">
+                    <img class="rounded" src="../../../assets/image not found.jpg" alt="image not found">
+                </div>
+                <div class=" col-md-6 col-sm-6 col-xs-12 ps-3">
+                    <div class="overview__info">
+                        <h1>Name: {{marvelData.name ? marvelData.name : marvelData.fullName ? marvelData.fullName :
+                            marvelData.title | titlecase}}</h1>
+                        <h2>Id: {{marvelData.id}}</h2>
+                        <h3>Available items of <em> {{marvelData.name ? marvelData.name : marvelData.fullName ?
+                                marvelData.fullName : marvelData.title}}</em></h3>
+                        <ul>
+                            <!-- !isCharacterRoute && isComicsRoute && isSeriesRoute && isStoriesRoute && isEventRoute -->
+                            <ng-container *ngIf="!isCharacterRoute && marvelData.characters?.available !== null ">
+                                <li><span>Characters :</span> <span>{{marvelData.characters?.available}}</span></li>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isComicsRoute && marvelData.comics?.available !== null">
+                                <li><span>Comics :</span> <span>{{marvelData.comics?.available}}</span></li>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isSeriesRoute && marvelData.series?.available !== null">
+                                <li><span>Series :</span> <span>{{marvelData.series?.available}}</span></li>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isStoriesRoute && marvelData.stories?.available !== null">
+                                <li><span>Stories :</span> <span>{{marvelData.stories?.available}}</span></li>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isEventRoute && marvelData.creators?.available !== null">
+                                <li><span>Creators :</span> <span>{{marvelData.creators?.available}}</span></li>
+                            </ng-container>
+
+                            <ng-container *ngIf="!isEventRoute && marvelData.events?.available !== null">
+                                <li><span>Events :</span> <span>{{marvelData.events?.available}}</span></li>
+                            </ng-container>
+
+                        </ul>
+                        <br>
+                        <div class="discription__title">Description : <br>
+                            <p class="discription">{{marvelData.description ? marvelData.description : 'No
+                                descriptionfound☹️' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-container *ngIf="characters.length !== 0">
+    <app-shared-layout [marvelData]="characters" [loadBtn]="loadCharacters" [isOverviewMode]="true"
+        (load)="loadCharacter()" (route)="navigateCharacters($event)">
+        <h1>Related Characters</h1>
+    </app-shared-layout>
+</ng-container>
+
+<ng-container *ngIf="comics.length !== 0">
+    <app-shared-layout [marvelData]="comics" [loadBtn]="loadComics" [isOverviewMode]="true" (load)="loadComic()"
+        (route)="navigateComics($event)">
+        <h1>Related Comics</h1>
+    </app-shared-layout>
+</ng-container>
+
+<ng-container *ngIf="series.length !== 0">
+    <app-shared-layout [marvelData]="series" [loadBtn]="loadSeries" [isOverviewMode]="true" (load)="loadSeriess()"
+        (route)="navigateSeries($event)">
+        <h1>Related Series</h1>
+    </app-shared-layout>
+</ng-container>
+
+<ng-container *ngIf="stories.length !== 0">
+    <app-shared-layout [marvelData]="stories" [loadBtn]="loadStories" [isOverviewMode]="true" (load)="loadStory()"
+        (route)="navigateStories($event)">
+        <h1>Related Stories</h1>
+    </app-shared-layout>
+</ng-container>
+
+<ng-container *ngIf="creators.length !== 0">
+    <app-shared-layout [marvelData]="creators" [loadBtn]="loadCreators" [isOverviewMode]="true" (load)="loadCreator()"
+        (route)="navigateCreator($event)">
+        <h1>Related Creators</h1>
+    </app-shared-layout>
+</ng-container>
+
+<ng-container *ngIf="events.length !== 0">
+    <app-shared-layout [marvelData]="events" [loadBtn]="loadEvents" [isOverviewMode]="true" (load)="loadEvent()"
+        (route)="navigateEvent($event)">
+        <h1>Related Events</h1>
+    </app-shared-layout>
+</ng-container>
